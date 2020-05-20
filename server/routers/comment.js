@@ -13,6 +13,6 @@ router.delete(
   authentication,
   authorization,
   commentController.deleteCommentById
-); //tesing authorization
+); //tesing authorizationn
 // router.delete("/:id", commentController.deleteCommentById);
 module.exports = router;
