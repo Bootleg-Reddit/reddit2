@@ -1,8 +1,9 @@
-const { Comment } = require("../models");
+const { Comment, User, Post } = require("../models");
 
 class Comments {
   static list(req, res) {
     Comment.findAll({
+      include: [{ model: Post }, { model: User }],
       //   where: { UserId: req.userID },
     })
       .then((data) => {

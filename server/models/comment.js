@@ -9,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notEmpty: false
-        }
+          notEmpty: false,
+        },
       },
       upvotes: DataTypes.INTEGER,
       downvotes: DataTypes.INTEGER,
       UserID: DataTypes.INTEGER,
-      PostID: DataTypes.INTEGER
+      PostID: DataTypes.INTEGER,
     },
     { sequelize }
   );
 
-  Comment.associate = function(models) {
+  Comment.associate = function (models) {
     // associations can be defined here
     Comment.belongsTo(models.User, { foreignKey: "UserID" });
     Comment.belongsTo(models.Post, { foreignKey: "PostID" });
