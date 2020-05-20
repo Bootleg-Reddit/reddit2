@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import NewPost from './pages/NewPost'
+import NewSubReddit from './pages/NewSubReddit'
 
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
+        <Route path="/submit/subreddit">
+          <NewSubReddit />
+        </Route>
         <Route path="/submit">
           <NewPost />
         </Route>
