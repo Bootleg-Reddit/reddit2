@@ -5,7 +5,7 @@ const authorization = (req, res, next) => {
     if (!data) {
       res.status(404).json({ error: "Comment not found" });
     } else {
-      if (data.UserId == req.userID) {
+      if (data.UserID == req.userID) {
         next();
       } else {
         res.status(401).json({ error: "Not Authorized" });
