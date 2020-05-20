@@ -5,7 +5,7 @@ const routerComment = require("./comment");
 
 router
   .use("/users", routerUser)
-  .use("/posts", routerPost);
+  .use("/posts", routerPost)
   .use("/comments", routerComment);
 
 module.exports = router;
