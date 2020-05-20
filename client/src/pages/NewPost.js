@@ -1,7 +1,14 @@
 import React from 'react'
 import logo from '../assets/submit.png'
+import { useHistory } from 'react-router-dom'
 
 export default function NewPost() {
+    const history = useHistory()
+
+    function doCancel() {
+        history.goBack()
+    }
+
     return (
         <div className="row m-4 mt-2">
         <div className="col-md-9 mt-3">
@@ -26,7 +33,7 @@ export default function NewPost() {
                             <textarea className="form-control" id="overview" placeholder="type post content" required></textarea>
                         </div>
                         <button type="submit" className="btn btn-primary btn-block mt-4">Post</button>
-                        <button type="button" className="btn btn-danger btn-block mt-3">Cancel</button>
+                        <button type="button" className="btn btn-danger btn-block mt-3" onClick={doCancel}>Cancel</button>
                     </form>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import Subreddit from './pages/Subreddit'
 import NewPost from './pages/NewPost'
 import NewSubReddit from './pages/NewSubReddit'
 
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Register />
+        </Route>
+        <Route path="/r">
+          <Subreddit />
         </Route>
         <Route path="/">
           <Home />
