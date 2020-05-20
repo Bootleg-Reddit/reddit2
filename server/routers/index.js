@@ -4,8 +4,8 @@ const routerPost = require("./post");
 const routerComment = require("./comment");
 
 router
-  .use("/user")
-  .use("/post")
-  .use("/comment");
+  // .use("/user", routerUser)
+  .use("/post", routerPost);
+// .use("/comment", routerComment);
 
 module.exports = router;
