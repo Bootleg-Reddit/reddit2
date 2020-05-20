@@ -1,5 +1,4 @@
 const { Comment, Post } = require("../models");
-
 const authorizationComment = (req, res, next) => {
   Comment.findByPk(req.params.id).then(data => {
     if (!data) {

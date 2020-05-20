@@ -9,25 +9,25 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         notNull: false,
         validate: {
-          notEmpty: false
-        }
+          notEmpty: false,
+        },
       },
       content: {
         type: DataTypes.STRING,
         notNull: false,
         validate: {
-          notEmpty: false
-        }
+          notEmpty: false,
+        },
       },
       upvotes: DataTypes.INTEGER,
       downvotes: DataTypes.INTEGER,
       UserID: DataTypes.INTEGER,
-      SubredditID: DataTypes.INTEGER
+      SubredditID: DataTypes.INTEGER,
     },
     { sequelize }
   );
 
-  Post.associate = function(models) {
+  Post.associate = function (models) {
     // associations can be defined here
     Post.belongsTo(models.User, { foreignKey: "UserID" });
     Post.belongsTo(models.Subreddit, { foreignKey: "SubredditID" });
