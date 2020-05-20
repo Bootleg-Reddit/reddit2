@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import NewPost from './pages/NewPost'
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
+        <Route path="/submit">
+          <NewPost />
+        </Route>
         <Route path="/login">
           <Login />
         </Route>
