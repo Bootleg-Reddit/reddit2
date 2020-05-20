@@ -4,7 +4,7 @@ class ControllerPost {
   static getAllPost(req, res, next) {
     Post.findAll()
       .then(allData => {
-        res.status(200).json(data);
+        res.status(200).json(allData);
       })
       .catch(error => {
         next({ status: 500, msg: "Internal Server Error!" });
