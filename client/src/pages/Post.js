@@ -1,12 +1,16 @@
 import React from 'react'
 import Post from '../components/Post'
+import Comment from '../components/Comment'
+import CompletePost from '../components/CompletePost'
 import SideNav from '../components/SideNav'
 
 export default function Home() {
     const home = 'http://localhost:3000/'
     const url = window.location.href;
     const path = 'http://localhost:3000/r/'
-    const current_subreddit = url.replace(path, '')
+    let temp = url.replace(path, '')
+    let temp2 = temp.split('/')
+    const current_subreddit = temp2[0]
 
     return (
         <>
@@ -15,7 +19,18 @@ export default function Home() {
         </div>
         <div className="row m-4 mt-2">
             <div className="col-md-9 mt-3">
-                <Post/>
+                <CompletePost/>
+                <br/>
+                <h1>Comments</h1>
+                <form>
+                    <textarea style={{"margin-bottom": "10px"}} class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+                <br/>
+                <Comment/>
+                <Comment/>
+                <Comment/>
             </div>
             <div className="col-md-3 mt-3">
                 <SideNav />

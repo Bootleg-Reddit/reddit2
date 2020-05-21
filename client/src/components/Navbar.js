@@ -30,7 +30,7 @@ export default function NavBar() {
                     <div className="col-md-2">
                         <Link to="/" className="navbar-brand"><img src={logo} alt="loading" style={{height: "32px", width:"120px"}} /></Link>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <form >
