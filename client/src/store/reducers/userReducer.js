@@ -1,17 +1,20 @@
 const initialState = {
-    token: null
+    token: null,
+    isLoggedIn: false
 }
 
 function userReducer(state = initialState, action) {
     switch (action.type) {
         case 'LOGIN':
-            return {...state, token: action.payload}
+            return {...state, isLoggedIn: true, token: action.payload}
         case 'LOGOUT':
-            return {...state, token: action.payload}
-        case 'SIGN_UP':
-            return {...state, token: action.payload}
+            return {...state, isLoggedIn: false, token: action.payload}
         case 'CHECK_TOKEN':
             return state
+        case 'SET_TOKEN': 
+            return {...state, token: action.payload}
+        case 'SET_ISLOGGEDIN': 
+            return {...state, isLoggedIn: action.payload}
         default:
             return state
     }

@@ -1,10 +1,11 @@
 import swal from 'sweetalert'
 import axios from 'axios'
 
+const url = 'http://localhost:3001'
 export function login(email,password) {
     return (dispatch) => {
         axios({
-            url: 'http://localhost:3000/users/login',
+            url: url + '/users/login',
             method: 'post',
             data: {
                 email,
@@ -12,6 +13,7 @@ export function login(email,password) {
             }
         })
         .then(response => {
+            localStorage.setItem('reddit_token', response.data.token)
             dispatch({
                 type: 'LOGIN',
                 payload: response.data.token
@@ -24,6 +26,7 @@ export function login(email,password) {
 }
 
 export function logout() {
+    localStorage.clear();
     return {
         type: 'LOGOUT',
         payload: ""
@@ -36,10 +39,25 @@ export function checkToken() {
     }
 }
 
+export const setToken = (value) => {
+    return {
+        type : 'SET_TOKEN',
+        payload : value
+    }
+}
+
+export const setIsLoggedIn = (value) => {
+    return {
+        type : 'SET_ISLOGGEDIN',
+        payload : value
+    }
+}
+
+
 export function signUp(email,username,password) {
     return (dispatch) => {
         axios({
-            url: 'http://localhost:3000/users/register',
+            url: url + '/users/register',
             method: 'post',
             data: {
                 email,
@@ -50,7 +68,7 @@ export function signUp(email,username,password) {
         .then(success=>{
             if(success) {
                 return axios({
-                    url: 'http://localhost:3000/users/login',
+                    url: url + '/users/login',
                     method: 'post',
                     data: {
                         email,
@@ -60,8 +78,9 @@ export function signUp(email,username,password) {
             }
         })
         .then(response=>{
+            localStorage.setItem('reddit_token', response.data.token)
             dispatch({
-                type: 'SIGN_UP',
+                type: 'LOGIN',
                 payload: response.data.token
             })
         })
