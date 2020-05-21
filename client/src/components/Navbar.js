@@ -23,7 +23,7 @@ export default function NavBar() {
                     <div className="col-md-2">
                         <Link to="/" className="navbar-brand"><img src={logo} alt="loading" style={{height: "32px", width:"120px"}} /></Link>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <form >
@@ -35,14 +35,17 @@ export default function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2" style={{float:"inline-end"}}>
-                    <div className=" btn btn-outline-primary" onClick={handleShowLogin}>
-                        LOG IN
+                    <div className="col-md-3" style={{float:"inline-end"}}>
+                    <div style={{display: "flex"}}>
+                        <div className=" btn btn-outline-primary" onClick={handleShowLogin}>
+                            LOG IN
+                        </div>
+
+                        <div className=" btn btn-primary ml-2" onClick={handleShowRegister}>
+                            SIGN UP
+                        </div>
                     </div>
 
-                    <div className=" btn btn-primary ml-2" onClick={handleShowRegister}>
-                        SIGN UP
-                    </div>
 
                     {/* <Link to="/login" className="btn btn-outline-primary">LOG IN</Link>
                     <Link to="/signup" className="btn btn-primary ml-2">SIGN UP</Link> */}

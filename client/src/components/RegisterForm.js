@@ -42,7 +42,6 @@ export default function Register(props) {
 
         </Modal>
 
-
         </>
         )
 }
