@@ -45,11 +45,11 @@ export default function NewPost() {
                         <img src={logo} height="32" width="32" />
                         <span className="ml-2">Post to Reddit</span>
                     </div>
-                    <li class="list-group-item">1. Remember the human</li>
-                    <li class="list-group-item">2. Behave like you would in real life</li>
-                    <li class="list-group-item">3. Look for the original source of content</li>
-                    <li class="list-group-item">4. Search for duplicates before posting</li>
-                    <li class="list-group-item">5. Read the community’s rules</li>
+                    <li className="list-group-item">1. Remember the human</li>
+                    <li className="list-group-item">2. Behave like you would in real life</li>
+                    <li className="list-group-item">3. Look for the original source of content</li>
+                    <li className="list-group-item">4. Search for duplicates before posting</li>
+                    <li className="list-group-item">5. Read the community’s rules</li>
                 </ul>
             </div>
         </div>
