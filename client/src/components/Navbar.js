@@ -1,15 +1,17 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import {useSelector,useDispatch} from 'react-redux'
-import {logout} from '../store/actions/userAction'
+import {logout, setIsLoggedIn, setToken} from '../store/actions/userAction'
 
 
 export default function NavBar() {
     // const [logIn, setLogIn] = useState(false)
-    const token = useSelector((state)=>state.userReducer.token)
+    // const token = useSelector((state)=>state.userReducer.token)
+    const dispatch = useDispatch()
+    const { token, isLoggedIn} = useSelector(state => state.userReducer);
     const [showLogin, setShowLogin] = useState(false);
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
@@ -18,11 +20,16 @@ export default function NavBar() {
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
 
-    const dispatch = useDispatch()
-    
     const doLogout = () => {
         dispatch(logout())
     }
+
+    useEffect(()=> {
+        if(localStorage.getItem('reddit_token')){
+            dispatch(setIsLoggedIn(true));
+            dispatch(setToken(localStorage.getItem('reddit_token')));
+        }
+    }, [isLoggedIn])
 
     return (
         <>
@@ -42,16 +49,18 @@ export default function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-2" style={{float:"inline-end"}}>
-                    {!token && <div className=" btn btn-outline-primary" onClick={handleShowLogin}>
+                    <div className="col-md-3" style={{float:"inline-end"}}>
+                    <div style={{display: 'flex'}}>
+                    {!isLoggedIn && <div className=" btn btn-outline-primary" onClick={handleShowLogin}>
                         LOG IN
                     </div>}
 
-                    {!token && <div className=" btn btn-primary ml-2" onClick={handleShowRegister}>
+                    {!isLoggedIn && <div className=" btn btn-primary ml-2" onClick={handleShowRegister}>
                         SIGN UP
                     </div>}
+                    </div>
 
-                    {token && <div className="btn btn-outline-secondary ml-2" onClick={doLogout}>
+                    {isLoggedIn && <div className="btn btn-outline-secondary ml-2" onClick={doLogout}>
                         LOG OUT
                     </div>}
                     </div>

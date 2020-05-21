@@ -4,18 +4,19 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-
+import { Provider } from 'react-redux'
+import store from './store/index';
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
-import Subreddit from './pages/Subreddit'
 import NewPost from './pages/NewPost'
 import Post from './pages/Post'
 import NewSubreddit from './pages/NewSubreddit'
 import Subreddit from './pages/Subreddit'
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <Navbar />
       <Switch>
@@ -31,7 +32,6 @@ function App() {
         <Route path="/r/:subreddit">
           <Subreddit/>
         </Route>
-
         <Route path="/login">
           <Login />
         </Route>
@@ -43,6 +43,8 @@ function App() {
         </Route>
       </Switch>
     </Router>
+    </Provider>
+
   );
 }
 
