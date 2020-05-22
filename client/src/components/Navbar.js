@@ -49,8 +49,7 @@ export default function NavBar() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-md-3" style={{float:"inline-end"}}>
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', marginRight: "10px"}}>
                     {!isLoggedIn && <div className=" btn btn-outline-primary" onClick={handleShowLogin}>
                         LOG IN
                     </div>}
@@ -60,10 +59,9 @@ export default function NavBar() {
                     </div>}
                     </div>
 
-                    {isLoggedIn && <div className="btn btn-outline-secondary ml-2" onClick={doLogout}>
+                    {isLoggedIn && <div style={{ marginRight: "10px"}} className="btn btn-outline-secondary ml-2" onClick={doLogout}>
                         LOG OUT
                     </div>}
-                    </div>
             </nav>
             <LoginForm
             show={showLogin}

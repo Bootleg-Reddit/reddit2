@@ -14,6 +14,21 @@ class Comments {
       });
   }
 
+  static listByPost(req, res){
+    console.log('aaa')
+    console.log(req.params.postId)
+    Comment.findAll({
+      where: {PostID: req.params.postId},
+      include: [{ model: Post }, { model: User }]
+    })
+    .then((data)=> {
+      res.status(200).json(data);
+    })
+    .catch((err)=> {
+      res.status(500).json(err);
+    })
+  }
+
   static create(req, res) {
     Comment.create({
       content: req.body.content,

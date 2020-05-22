@@ -39,8 +39,8 @@ export default function NewPost() {
             </div>
         </div>
         <div className="col-md-3 mt-3">
-            <div class="card">
-                <ul class="list-group list-group-flush">
+            <div className="card">
+                <ul className="list-group list-group-flush">
                     <div className="list-group-item">
                         <img src={logo} height="32" width="32" />
                         <span className="ml-2">Post to Reddit</span>

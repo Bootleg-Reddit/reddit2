@@ -1,4 +1,4 @@
-const { Post } = require("../models");
+const { Post, Subreddit} = require("../models");
 
 class ControllerPost {
   static getAllPost(req, res, next) {
@@ -9,6 +9,16 @@ class ControllerPost {
       .catch(error => {
         next({ status: 500, msg: "Internal Server Error!" });
       });
+  }
+
+  static getAllPostsBySubreddit(req, res, next){
+    Post.findAll({where: {SubredditID: req.params.subredditId}})
+    .then(data =>{
+      res.status(200).json(data);
+    })
+    .catch(error => {
+      next({ status: 500, msg: "Internal Server Error!" });
+    });
   }
 
   static getPostById(req, res, next) {
@@ -23,19 +33,25 @@ class ControllerPost {
   }
 
   static createPost(req, res, next) {
-    const { title, content } = req.body;
+    const { title, content, subreddit } = req.body;
     const upvotes = 0;
     const downvotes = 0;
     const UserID = req.userID;
-    const SubredditID = 1;
-
-    Post.create({ title, content, upvotes, downvotes, UserID, SubredditID })
-      .then(data => {
-        res.status(201).json(data);
-      })
-      .catch(error => {
-        next({ status: 500, msg: "Internal Server Error!" });
-      });
+    let SubredditID = null
+    console.log('aaa')
+    Subreddit.findOne({where: {name: subreddit}})
+    .then((data)=> {
+      console.log('bbb')
+      SubredditID = data.id;
+      return Post.create({ title, content, upvotes, downvotes, UserID, SubredditID });
+    })
+    .then(data => {
+      res.status(201).json(data);
+    })
+    .catch(error => {
+      console.log(error)
+      next({ status: 500, msg: "Internal Server Error!" });
+    });
   }
 
   static deletePost(req, res, next) {
@@ -56,11 +72,11 @@ class ControllerPost {
   static editPost(req, res, next) {
     const { id } = req.params;
     const { title, content, upvotes, downvotes } = req.body;
-    const UserID = req.userID;
-    const SubredditID = 1;
+    // const UserID = req.userID;
+    // const SubredditID = 1;
 
     Post.update(
-      { title, content, upvotes, downvotes, UserID, SubredditID },
+      { title, content, upvotes, downvotes },
       {
         where: {
           id: id

@@ -1,5 +1,4 @@
 import React from 'react'
-import Post from '../components/Post'
 import Comment from '../components/Comment'
 import CompletePost from '../components/CompletePost'
 import SideNav from '../components/SideNav'
@@ -25,7 +24,6 @@ export default function Home() {
                 <form>
                     <textarea style={{"margin-bottom": "10px"}} class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     <button type="submit" class="btn btn-primary">Submit</button>
-
                 </form>
                 <br/>
                 <Comment/>

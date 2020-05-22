@@ -15,9 +15,9 @@ export default function SideNav() {
     return (
         <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <Link to='/submit' className="btn btn-primary">Create Post</Link>
-            <Link to='/submit/subreddit' className="btn btn-secondary mt-3">Create Subreddit</Link>
+            <Link to='/createsubreddit' className="btn btn-secondary mt-3">Create Subreddit</Link>
             <br/>
-            <p style={{textAlign:"center"}} className="mt-3">SubReddits</p>
+            <p style={{textAlign:"center"}} className="mt-3">Subreddits</p>
             {   (url === home )  &&
                 <a
                 className="nav-link active"

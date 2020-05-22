@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     { sequelize }
   );
 
+  
+
   Subreddit.associate = function(models) {
     // associations can be defined here
     Subreddit.hasMany(models.UserSubreddit, { foreignKey: "SubredditID" });
