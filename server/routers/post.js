@@ -6,6 +6,7 @@ const authentication = require("../middlewares/authentication");
 
 router
   .get("/", ControllerPost.getAllPost)
+  .get("/:subredditId", ControllerPost.getAllPostsBySubreddit)
   .post("/", authentication, ControllerPost.createPost)
   .get("/:id", ControllerPost.getPostById)
   .put("/:id", authentication, authorizationPost, ControllerPost.editPost)
