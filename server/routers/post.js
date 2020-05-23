@@ -10,7 +10,8 @@ router
   .post("/", authentication, ControllerPost.createPost)
   .get("/:id", ControllerPost.getPostById)
   .put("/:id", authentication, authorizationPost, ControllerPost.editPost)
-  .delete("/:id", authentication, authorizationPost, ControllerPost.deletePost);
+  .delete("/:id", authentication, authorizationPost, ControllerPost.deletePost)
+  .post("/vote/:id", authentication, authorizationPost, ControllerPost.ratePost);
 
 router.use(errorHandler);
 

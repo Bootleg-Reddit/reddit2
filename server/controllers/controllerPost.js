@@ -1,10 +1,11 @@
-const { Post, Subreddit} = require("../models");
+const { Post, Subreddit, User, PostUser} = require("../models");
+const { Op } = require('sequelize');
 
 class ControllerPost {
   static getAllPost(req, res, next) {
     Post.findAll()
       .then(allData => {
-        res.status(200).json(allData);
+        res.status(200).json({posts: allData});
       })
       .catch(error => {
         next({ status: 500, msg: "Internal Server Error!" });
@@ -14,7 +15,7 @@ class ControllerPost {
   static getAllPostsBySubreddit(req, res, next){
     Post.findAll({where: {SubredditID: req.params.subredditId}})
     .then(data =>{
-      res.status(200).json(data);
+      res.status(200).json({posts: data});
     })
     .catch(error => {
       next({ status: 500, msg: "Internal Server Error!" });
@@ -69,6 +70,61 @@ class ControllerPost {
       });
   }
 
+  static ratePost (req, res, next) {
+    const UserId = req.userID;
+    const Vote = req.body.vote;
+    const PostId = req.params.id;
+    //find the vote that relate to the user and post
+    PostUser.findOne({
+      where: {
+        [Op.and]: [
+          {PostId : PostId},
+          { UserId : UserId }     
+        ]
+      }
+    })
+    .then(postuser => {
+      //if the vote already exist, update the vote, else, make a new vote
+      return postuser ? PostUser.update({PostId : PostId, UserId : UserId, Vote : Vote}, {where: {
+          [Op.and]: [
+              {PostId : PostId},
+              { UserId : UserId }     
+          ]
+      }}) : PostUser.create({PostId : PostId, UserId : UserId, Vote : Vote});
+    })
+    .then(()=>{
+        //count the number of total likes of the post
+        return PostUser.count({
+            where: {
+              PostId : PostId,
+              Vote: 'TRUE'
+            }
+        });
+    })
+    .then(upvotes =>{
+        //update the no. of upvotes of the post
+        return Post.update({upvotes : upvotes}, {where : {id : PostId}})
+    })
+    .then(()=>{
+        //count the number of total dislikes of the post
+        return PostUser.count({
+            where: {
+              PostId : PostId,
+              Vote: 'FALSE'
+            }
+        });
+    })
+    .then(downvotes =>{
+        //update the no. of downvotes of the post
+        return Post.update({downvotes : downvotes}, {where : {id : PostId}})
+    })
+    .then((data)=>{
+        res.status(200).json({post: data});
+    })
+    .catch(err =>{
+      next({ status: 500, msg: "Internal Server Error!" });
+    });
+}
   static editPost(req, res, next) {
     const { id } = req.params;
     const { title, content, upvotes, downvotes } = req.body;
