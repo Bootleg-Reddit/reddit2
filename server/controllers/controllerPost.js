@@ -3,8 +3,9 @@ const { Op } = require('sequelize');
 
 class ControllerPost {
   static getAllPost(req, res, next) {
-    Post.findAll()
+    Post.findAll({include: [{ model: User }, {model: Subreddit}]})
       .then(allData => {
+        console.log(allData)
         res.status(200).json({posts: allData});
       })
       .catch(error => {
@@ -13,7 +14,15 @@ class ControllerPost {
   }
 
   static getAllPostsBySubreddit(req, res, next){
-    Post.findAll({where: {SubredditID: req.params.subredditId}})
+    const name = req.params.name
+    Subreddit.findOne({where: {name: name}})
+    .then((subreddit)=> {
+      if (subreddit){
+        return Post.findAll({where: {SubredditID: subreddit.id}, include: [{ model: User }, {model: Subreddit}]})
+      }else{
+        res.status(500).json({msg: 'Subreddit not found'});
+      }
+    })
     .then(data =>{
       res.status(200).json({posts: data});
     })
@@ -47,7 +56,9 @@ class ControllerPost {
       return Post.create({ title, content, upvotes, downvotes, UserID, SubredditID });
     })
     .then(data => {
-      res.status(201).json(data);
+      console.log('hey check this')
+      console.log(data)
+      res.status(201).json({post: data});
     })
     .catch(error => {
       console.log(error)

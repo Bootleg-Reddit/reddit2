@@ -55,7 +55,8 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
     // associations can be defined here
-    User.belongsToMany(models.Post, {through : models.PostUser}) //for votes
+    // User.belongsToMany(models.Post, {through : models.PostUser}) //for votes
+    User.hasMany(models.PostUser, { foreignKey: "UserId" })
     User.hasMany(models.UserSubreddit, { foreignKey: "UserID" });
     User.hasMany(models.Post, { foreignKey: "UserID" }); //for ownership
     User.hasMany(models.Comment, { foreignKey: "UserID" });

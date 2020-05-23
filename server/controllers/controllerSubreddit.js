@@ -14,7 +14,8 @@ class ControllerSubreddit {
 
     static createSubreddit(req, res, next) {
         const { name } = req.body;
-        Subreddit.create({ name })
+        let lowercaseName = name.toLowerCase()
+        Subreddit.create({ name: lowercaseName })
         .then(data => {
             res.status(201).json(data);
         })

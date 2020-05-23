@@ -6,9 +6,9 @@ const initialState = {
 function postReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_POST':
-            return {...state, token: action.payload}
+            return {...state, post: action.payload}
         case 'SET_POSTS':
-            return {...state, token: action.payload}
+            return {...state, posts: action.payload}
         default:
             return state
     }

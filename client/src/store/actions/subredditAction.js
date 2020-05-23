@@ -10,6 +10,7 @@ export function getSubreddits(){
             method: 'get'
         })
         .then(response => {
+            console.log(response.data.subreddits)
             dispatch(setSubreddits(response.data.subreddits))
         })
         .catch(err=>{

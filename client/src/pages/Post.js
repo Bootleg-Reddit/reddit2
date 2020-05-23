@@ -2,8 +2,11 @@ import React from 'react'
 import Comment from '../components/Comment'
 import CompletePost from '../components/CompletePost'
 import SideNav from '../components/SideNav'
+import {useParams} from 'react-router-dom';
 
 export default function Home() {
+    const {id} = useParams();
+    console.log(id)
     const home = 'http://localhost:3000/'
     const url = window.location.href;
     const path = 'http://localhost:3000/r/'
