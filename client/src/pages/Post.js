@@ -1,15 +1,54 @@
-import React from 'react'
+import React, {useEffect, useState } from 'react'
+import {useSelector,useDispatch} from 'react-redux'
+import { getPostById, getComments, createComment } from "../store/actions/postAction";
+
 import Comment from '../components/Comment'
 import CompletePost from '../components/CompletePost'
 import SideNav from '../components/SideNav'
+import {useParams} from 'react-router-dom';
 
 export default function Home() {
+    const {id} = useParams();
+    console.log(id)
     const home = 'http://localhost:3000/'
     const url = window.location.href;
     const path = 'http://localhost:3000/r/'
     let temp = url.replace(path, '')
     let temp2 = temp.split('/')
     const current_subreddit = temp2[0]
+    const dispatch = useDispatch();
+    const post = useSelector((state)=> state.postReducer.post);
+    const comments = useSelector((state)=> state.postReducer.comments);
+    const [comment, setComment ] = useState('')
+    const [newComments, setNewComments ] = useState([])
+    useEffect(()=>{
+        dispatch(getPostById(id));
+        dispatch(getComments(id));
+    }, [])
+
+    const handleInput = (mewcomment) => {
+        setComment(mewcomment)
+    }
+
+    const submitComment = (e) => {
+        e.preventDefault();
+        let data = {
+            content: comment
+        }
+        let newComment = {
+            content: comment,
+            User: {
+                username: 'You'
+            }
+        }
+        setComment('')
+
+        let oldNewComment = newComments
+        oldNewComment.unshift(newComment)
+        setNewComments(oldNewComment)
+        console.log(newComments)
+        dispatch(createComment(id, data))
+    }
 
     return (
         <>
@@ -18,20 +57,44 @@ export default function Home() {
         </div>
         <div className="row m-4 mt-2">
             <div className="col-md-9 mt-3">
-                <CompletePost/>
+                { post &&
+                <>
+                <CompletePost post={post}/>
                 <br/>
                 <h1>Comments</h1>
                 <form>
-                    <textarea style={{"margin-bottom": "10px"}} class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <textarea onChange={(e)=>handleInput(e.target.value)} value={comment} style={{marginBottom: "10px"}} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <button onClick={submitComment} type="submit" className="btn btn-primary">Submit</button>
                 </form>
-                <br/>
-                <Comment/>
-                <Comment/>
-                <Comment/>
+                <br/>                
+                </>
+                }
+                {   newComments &&
+                    <>
+                        {newComments.map((comment, idx)=>{
+                            return (
+                                <Comment key={idx} comment={comment}/>
+                            )
+                        })}
+                    </>
+                }
+
+                {   comments &&
+                    <>
+                        {comments.map((comment, idx)=>{
+                            return (
+                                <>
+                                { comments.length - idx > newComments.length &&
+                                    <Comment key={idx} comment={comment}/>
+                                }
+                                </>
+                            )
+                        })}
+                    </>
+                }
             </div>
             <div className="col-md-3 mt-3">
-                <SideNav />
+                <SideNav/>
             </div>
         </div>
         </>

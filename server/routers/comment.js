@@ -7,7 +7,7 @@ const { authorizationComment } = require("../middlewares/authorization");
 
 router.get("/", commentController.list);
 router.get("/:postId", commentController.listByPost);
-router.post("/", authentication, commentController.create);
+router.post("/:id", authentication, commentController.create);
 router.put("/:id", authentication, commentController.editCommentById);
 router.delete(
   "/:id",
