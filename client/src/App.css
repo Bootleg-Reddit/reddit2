@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.loadingPage {
+  height: 400px;
+  width: 100%;
+}
+
+.spinner-border{
+  margin-left: 50%;
+  margin-top: 11.5%;
+}
+

@@ -6,6 +6,7 @@ const url = 'http://localhost:3001'
 
 export function getAllPosts(){
     return (dispatch) => {
+        dispatch(setLoadingPosts(true))
         axios({
             url: url + '/posts',
             method: 'get'
@@ -40,6 +41,43 @@ export function getComments(id){
             swal("Error!",'Cannot Retrieve Posts',"error")
         })
     }
+}
+
+export function vote (id, vote){
+    console.log('masuk vote')
+    return (dispatch)=> {
+        axios({
+            url: url + '/posts/vote/' + id,
+            method: 'post',
+            data: {
+                vote: vote
+            },
+            headers: {
+                token: localStorage.getItem('reddit_token')
+            }
+        })
+        .then(response=>{
+            console.log(response)
+        })
+        .catch(console.log)
+    }
+}
+
+export function removeVote(id){
+    return (dispatch)=> {
+        axios({
+            url: url + '/posts/vote/' + id,
+            method: 'delete',
+            headers: {
+                token: localStorage.getItem('reddit_token')
+            }
+        })
+        .then(response=>{
+            console.log(response)
+        })
+        .catch(console.log)
+    }
+
 }
 
 export function createComment(id, data){
@@ -77,6 +115,7 @@ export function createComment(id, data){
 
 export function getAllPostsBySubreddit(SubredditName){
     return (dispatch) => {
+        dispatch(setLoadingPosts(true))
         axios({
             url: url + '/posts/r/' + SubredditName,
             method: 'get',
@@ -159,5 +198,13 @@ export const setComments = (value) => {
         payload : value
     }
 }
+
+export const setLoadingPosts = (value) => {
+    return {
+        type : 'SET_LOADINGPOSTS',
+        payload : value
+    }
+}
+
 
 

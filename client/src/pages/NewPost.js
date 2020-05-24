@@ -9,7 +9,6 @@ import { createPost } from "../store/actions/postAction";
 
 export default function NewPost() {
     const dispatch = useDispatch();
-
     const history = useHistory()
     const [subreddit, setSubreddit] = useState(null)
     const [content, setContent] = useState(null)
@@ -22,7 +21,7 @@ export default function NewPost() {
     }, [])
 
     useEffect(()=> {
-        if(post !== null){
+        if(post !== null && subreddit !==null){
             console.log(post)
             history.push(`r/${subreddit.toLowerCase()}/${post.id}`);
         }

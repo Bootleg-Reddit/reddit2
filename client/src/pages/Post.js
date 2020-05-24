@@ -6,8 +6,20 @@ import Comment from '../components/Comment'
 import CompletePost from '../components/CompletePost'
 import SideNav from '../components/SideNav'
 import {useParams} from 'react-router-dom';
+import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
+
 
 export default function Home() {
+    const { token, isLoggedIn} = useSelector(state => state.userReducer);
+    const [showLogin, setShowLogin] = useState(false);
+    const handleCloseLogin = () => setShowLogin(false);
+    const handleShowLogin = () => setShowLogin(true);
+  
+    const [showRegister, setShowRegister] = useState(false);
+    const handleCloseRegister = () => setShowRegister(false);
+    const handleShowRegister = () => setShowRegister(true);
+
     const {id} = useParams();
     console.log(id)
     const home = 'http://localhost:3000/'
@@ -32,22 +44,27 @@ export default function Home() {
 
     const submitComment = (e) => {
         e.preventDefault();
-        let data = {
-            content: comment
-        }
-        let newComment = {
-            content: comment,
-            User: {
-                username: 'You'
-            }
-        }
-        setComment('')
 
-        let oldNewComment = newComments
-        oldNewComment.unshift(newComment)
-        setNewComments(oldNewComment)
-        console.log(newComments)
-        dispatch(createComment(id, data))
+        if(isLoggedIn){
+            let data = {
+                content: comment
+            }
+            let newComment = {
+                content: comment,
+                User: {
+                    username: 'You'
+                }
+            }
+            setComment('')
+    
+            let oldNewComment = newComments
+            oldNewComment.unshift(newComment)
+            setNewComments(oldNewComment)
+            console.log(newComments)
+            dispatch(createComment(id, data))    
+        }else{
+            handleShowLogin()
+        }
     }
 
     return (
@@ -97,6 +114,20 @@ export default function Home() {
                 <SideNav/>
             </div>
         </div>
+        <LoginForm
+                show={showLogin}
+                onHide={handleCloseLogin}
+                onShowRegister={handleShowRegister}
+                animation={true}
+            />
+
+            <RegisterForm
+            show={showRegister}
+            onHide={handleCloseRegister}
+            onShowLogin={handleShowLogin}
+            animation={true}
+            />
+
         </>
     )
 }

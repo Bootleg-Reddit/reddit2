@@ -3,7 +3,8 @@ import Post from '../components/Post'
 import SideNav from '../components/SideNav'
 import { useSelector, useDispatch} from "react-redux";
 import { getAllPostsBySubreddit } from "../store/actions/postAction";
-
+import Loading from '../components/Loading'
+import Nothing from '../components/Nothing'
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export default function Home() {
     const current_subreddit = url.replace(path, '')
 
     let posts = useSelector((state)=> state.postReducer.posts);
+    let loadingPosts = useSelector((state)=> state.postReducer.loadingPosts);
+
     useEffect(()=>{
         console.log(current_subreddit)
         dispatch(getAllPostsBySubreddit(current_subreddit));
@@ -28,6 +31,12 @@ export default function Home() {
         </div>
         <div className="row m-4 mt-2">
             <div className="col-md-9 mt-3">
+            { loadingPosts &&
+                <Loading/>
+            }
+            { !loadingPosts &&
+                <>
+
 
                 { posts.length > 0 &&
                 <>
@@ -42,6 +51,16 @@ export default function Home() {
                 })}
                 </>
                 }
+
+
+                { posts.length == 0 &&
+                    <Nothing/>
+                }
+
+
+
+                </>
+            }
             </div>
             <div className="col-md-3 mt-3">
                 <SideNav />
