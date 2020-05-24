@@ -9,7 +9,6 @@ import { createPost } from "../store/actions/postAction";
 
 export default function NewPost() {
     const dispatch = useDispatch();
-
     const history = useHistory()
     const [subreddit, setSubreddit] = useState(null)
     const [content, setContent] = useState(null)

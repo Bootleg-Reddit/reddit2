@@ -6,6 +6,7 @@ const url = 'http://localhost:3001'
 
 export function getAllPosts(){
     return (dispatch) => {
+        dispatch(setLoadingPosts(true))
         axios({
             url: url + '/posts',
             method: 'get'
@@ -114,6 +115,7 @@ export function createComment(id, data){
 
 export function getAllPostsBySubreddit(SubredditName){
     return (dispatch) => {
+        dispatch(setLoadingPosts(true))
         axios({
             url: url + '/posts/r/' + SubredditName,
             method: 'get',
@@ -196,5 +198,13 @@ export const setComments = (value) => {
         payload : value
     }
 }
+
+export const setLoadingPosts = (value) => {
+    return {
+        type : 'SET_LOADINGPOSTS',
+        payload : value
+    }
+}
+
 
 
