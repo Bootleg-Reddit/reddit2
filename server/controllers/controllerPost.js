@@ -33,7 +33,7 @@ class ControllerPost {
 
   static getPostById(req, res, next) {
     const { id } = req.params;
-    Post.findOne({ where: { id: id } })
+    Post.findOne({ where: { id: id }, include: [{ model: User }]})
       .then(data => {
         res.status(200).json(data);
       })

@@ -30,14 +30,25 @@ class Comments {
   }
 
   static create(req, res) {
+    console.log('we in')
+    console.log(req.body.content,req.params.id)
     Comment.create({
       content: req.body.content,
       upvotes: 0,
       downvotes: 0,
       UserID: req.userID,
-      PostID: req.body.postId,
+      PostID: req.params.id,
+    }, {
+      include: [{ model: Post }, { model: User }]
     })
       .then((data) => {
+        console.log(data)
+        return Comment.findAll({
+          where: {PostID: req.params.id},
+          include: [{ model: Post }, { model: User }]
+        })
+      })
+      .then((data)=>{
         res.status(201).json(data);
       })
       .catch((err) => {

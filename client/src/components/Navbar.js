@@ -20,8 +20,6 @@ export default function NavBar() {
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
 
-    
-
     const doLogout = () => {
         dispatch(logout())
     }

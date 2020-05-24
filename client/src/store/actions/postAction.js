@@ -1,6 +1,6 @@
 import swal from 'sweetalert'
 import axios from 'axios'
-
+import store from '../index';
 
 const url = 'http://localhost:3001'
 
@@ -20,6 +20,58 @@ export function getAllPosts(){
         .catch(err=>{
             swal("Error!",'Cannot Retrieve Posts',"error")
         })
+    }
+}
+
+export function getComments(id){
+    return (dispatch) => {
+        axios({
+            url: url + '/comments/' + id,
+            method: 'get'
+        })
+        .then(response => {
+            console.log(response.data)
+            dispatch({
+                type: 'SET_COMMENTS',
+                payload: response.data
+            });
+        })
+        .catch(err=>{
+            swal("Error!",'Cannot Retrieve Posts',"error")
+        })
+    }
+}
+
+export function createComment(id, data){
+    console.log(data)
+    console.log(id)
+    console.log(localStorage.getItem('reddit_token'))
+    return(dispatch) => {
+        axios({
+            url: url + '/comments/' + id,
+            method: 'post',
+            data: data,
+            headers: {
+                token: localStorage.getItem('reddit_token')
+            }
+        })
+        .then(response => {
+            console.log(response)
+            // let comments = store.getState().postReducer.comments;
+            // comments.push(response.data)
+            console.log('==============')
+            console.log(response.data)
+            console.log('==============')
+
+            dispatch({
+                type: 'SET_COMMENTS',
+                payload: response.data
+            });
+        })
+        .catch(err=>{
+            swal("Error!",err,"error")
+        })
+
     }
 }
 
@@ -46,9 +98,6 @@ export function createPost(data){
     console.log('fridufbnrejfnrejkfnc erkjdn f')
     console.log(data)
     console.log('lalalalal erkjdn f')
-
-
-
     return (dispatch) => {
         axios({
             url: url + '/posts',
@@ -60,7 +109,7 @@ export function createPost(data){
         })
         .then(response => {
             console.log(response.data.post)
-            
+
             dispatch({
                 type: 'SET_POST',
                 payload: response.data.post
@@ -74,13 +123,15 @@ export function createPost(data){
 
 
 export function getPostById(id){
+    console.log('we in')
     return (dispatch) => {
         axios({
             url: url + '/posts/' + id,
-            method: 'get',
+            method: 'get'
         })
         .then(response => {
-            dispatch(setPosts(response.data.posts))
+            console.log(response.data)
+            dispatch(setPost(response.data))
         })
         .catch(err=>{
             swal("Error!",err.response.data.error,"error")
@@ -101,4 +152,12 @@ export const setPost = (value) => {
         payload : value
     }
 }
+
+export const setComments = (value) => {
+    return {
+        type : 'SET_COMMENTS',
+        payload : value
+    }
+}
+
 

@@ -59,6 +59,8 @@ export default function SideNav() {
                 All
                 </a>
             }
+            { subreddits &&
+            <>
             { subreddits.map((subreddit, idx) => {
                 return (
                     <div key={idx}>
@@ -66,7 +68,7 @@ export default function SideNav() {
                         <a
                         className="nav-link active"
                         id="v-pills-home-tab" 
-                        data-toggle="pill" href="/" 
+                        data-toggle="pill" href={`/r/${subreddit.name.toLowerCase()}`} 
                         role="tab" 
                         aria-controls="v-pills-home" 
                         aria-selected="true"
@@ -74,7 +76,7 @@ export default function SideNav() {
                         {subreddit.name}
                         </a>
                     }
-                        {   (current_subreddit !== subreddit.name.toLowerCase() &&  current_subreddit2 !== subreddit.name.toLowerCase()) &&
+                    {   (current_subreddit !== subreddit.name.toLowerCase() &&  current_subreddit2 !== subreddit.name.toLowerCase()) &&
                         <a
                         className="nav-link"
                         id="v-pills-home-tab" 
@@ -89,7 +91,9 @@ export default function SideNav() {
                     </div>
 
                     )
-            })}                
+            })}   
+            </>   
+            }          
         </div>
     )
 }

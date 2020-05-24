@@ -17,7 +17,7 @@ class ControllerSubreddit {
         let lowercaseName = name.toLowerCase()
         Subreddit.create({ name: lowercaseName })
         .then(data => {
-            res.status(201).json(data);
+            res.status(201).json({subreddit: data});
         })
         .catch(error => {
             next({ status: 500, msg: "Internal Server Error!" });
