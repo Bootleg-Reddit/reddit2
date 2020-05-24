@@ -58,27 +58,16 @@ class ControllerPost {
     .then(data => {
       console.log('hey check this')
       console.log(data)
+      return Post.findOne({ where: { id: data.id }, include: [{ model: User }]})
+      // res.status(201).json({post: data});
+    })
+    .then(data=>{
       res.status(201).json({post: data});
     })
     .catch(error => {
       console.log(error)
       next({ status: 500, msg: "Internal Server Error!" });
     });
-  }
-
-  static deletePost(req, res, next) {
-    const { id } = req.params;
-    Post.destroy({ where: { id: id } })
-      .then(result => {
-        if (result) {
-          res.status(201).json(result);
-        } else {
-          res.status(404).json({ msg: "Post not found!" });
-        }
-      })
-      .catch(error => {
-        next({ status: 500, msg: "Internal Server Error!" });
-      });
   }
 
   static ratePost (req, res, next) {
@@ -135,7 +124,56 @@ class ControllerPost {
     .catch(err =>{
       next({ status: 500, msg: "Internal Server Error!" });
     });
-}
+  }
+
+  static deleteVote(req, res, next){
+    const { id } = req.params;
+    PostUser.destroy({where: {PostId: id, UserId: req.userID}})
+    .then(() => {
+      return PostUser.count({
+        where: {
+          PostId : id,
+          Vote: 'FALSE'
+        }
+      });
+    })
+    .then(downvotes=>{
+      return Post.update({downvotes : downvotes}, {where : {id : id}})
+    })
+    .then(()=>{
+      return PostUser.count({
+        where: {
+          PostId : id,
+          Vote: 'TRUE'
+        }
+      });
+    })
+    .then((upvotes)=>{
+      return Post.update({upvotes : upvotes}, {where : {id : id}})
+    })
+    .then((data)=>{
+      res.status(200).json({post: data});
+    })
+    .catch(error => {
+      next({ status: 500, msg: "Internal Server Error!" });
+    });
+  }
+
+  static deletePost(req, res, next) {
+    const { id } = req.params;
+    Post.destroy({ where: { id: id } })
+      .then(result => {
+        if (result) {
+          res.status(201).json(result);
+        } else {
+          res.status(404).json({ msg: "Post not found!" });
+        }
+      })
+      .catch(error => {
+        next({ status: 500, msg: "Internal Server Error!" });
+      });
+  }
+
   static editPost(req, res, next) {
     const { id } = req.params;
     const { title, content, upvotes, downvotes } = req.body;

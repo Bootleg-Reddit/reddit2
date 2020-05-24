@@ -22,7 +22,7 @@ export default function NewPost() {
     }, [])
 
     useEffect(()=> {
-        if(post !== null){
+        if(post !== null && subreddit !==null){
             console.log(post)
             history.push(`r/${subreddit.toLowerCase()}/${post.id}`);
         }

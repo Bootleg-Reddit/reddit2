@@ -42,6 +42,43 @@ export function getComments(id){
     }
 }
 
+export function vote (id, vote){
+    console.log('masuk vote')
+    return (dispatch)=> {
+        axios({
+            url: url + '/posts/vote/' + id,
+            method: 'post',
+            data: {
+                vote: vote
+            },
+            headers: {
+                token: localStorage.getItem('reddit_token')
+            }
+        })
+        .then(response=>{
+            console.log(response)
+        })
+        .catch(console.log)
+    }
+}
+
+export function removeVote(id){
+    return (dispatch)=> {
+        axios({
+            url: url + '/posts/vote/' + id,
+            method: 'delete',
+            headers: {
+                token: localStorage.getItem('reddit_token')
+            }
+        })
+        .then(response=>{
+            console.log(response)
+        })
+        .catch(console.log)
+    }
+
+}
+
 export function createComment(id, data){
     console.log(data)
     console.log(id)

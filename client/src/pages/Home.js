@@ -9,7 +9,6 @@ export default function Home() {
     let posts = useSelector((state)=> state.postReducer.posts);
     useEffect(()=>{
         dispatch(getAllPosts());
-        // console.log(posts)
     }, [])
     return (
         <>
@@ -19,7 +18,6 @@ export default function Home() {
         
         <div className="row m-4 mt-2">
             <div className="col-md-9 mt-3">
-
                 { posts.length > 0 &&
                 <>
                 {posts.map((post, idx)=> {
