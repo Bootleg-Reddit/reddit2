@@ -19,11 +19,15 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+
   const ENDPOINT = 'http://localhost:5000/';
   const isLoggedIn = useSelector((state)=> state.userReducer.isLoggedIn);
+  const username = useSelector((state)=> state.userReducer.username);
+  // setName(username);
   const history = useHistory()
+
   useEffect(() => {
-    if(!isLoggedIn){
+    if(isLoggedIn === false){
       console.log('not logged in')
       history.push(`/`);
     }
@@ -32,14 +36,14 @@ const Chat = ({ location }) => {
     socket = io(ENDPOINT);
 
     setRoom(room);
-    setName(name)
+    setName(username)
 
     socket.emit('join', { name, room }, (error) => {
       if(error) {
         alert(error);
       }
     });
-  }, [ENDPOINT]);
+  }, [ENDPOINT, isLoggedIn]);
   
   useEffect(() => {
     socket.on('message', message => {

@@ -5,7 +5,8 @@ import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import {useSelector,useDispatch} from 'react-redux'
 import {logout, setIsLoggedIn, setToken, setUsername, setEmail} from '../store/actions/userAction'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function NavBar() {
     // const [logIn, setLogIn] = useState(false)
     // const token = useSelector((state)=>state.userReducer.token)
@@ -32,6 +33,11 @@ export default function NavBar() {
         }
     }, [isLoggedIn])
 
+    function search(e){
+        e.preventDefault();
+        toast("Search feature comming soon");
+    }
+
     return (
         <>
             <nav className="navbar row navbar-light bg-light sticky-top">
@@ -41,7 +47,7 @@ export default function NavBar() {
                     <div className="col-md-6">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <form >
+                                <form onSubmit={search} >
                                     <div className="input-group">
                                         <div className="input-group-prepend"><span className="input-group-text" id="basic-addon1"><i className="fas fa-search"></i></span></div>
                                         <input className="form-control" type="search" placeholder="Find a post" aria-label="Search" style={{maxWidth:"75%"}} />

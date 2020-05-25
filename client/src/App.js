@@ -35,7 +35,6 @@ function App() {
         </Route>
         <Route path="/chat/" component={Chat}>
         </Route>
-
         <Route path="/login">
           <Login />
         </Route>
@@ -48,7 +47,6 @@ function App() {
       </Switch>
     </Router>
     </Provider>
-
   );
 }
 
