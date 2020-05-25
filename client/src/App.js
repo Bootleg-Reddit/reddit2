@@ -14,6 +14,7 @@ import NewPost from './pages/NewPost'
 import Post from './pages/Post'
 import NewSubreddit from './pages/NewSubreddit'
 import Subreddit from './pages/Subreddit'
+import Chat from './chatComponents/Chat/Chat'
 function App() {
   return (
     <Provider store={store}>
@@ -32,6 +33,9 @@ function App() {
         <Route path="/r/:subreddit">
           <Subreddit/>
         </Route>
+        <Route path="/chat/" component={Chat}>
+        </Route>
+
         <Route path="/login">
           <Login />
         </Route>

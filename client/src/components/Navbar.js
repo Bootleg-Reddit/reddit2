@@ -4,8 +4,7 @@ import logo from '../assets/logo.svg'
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import {useSelector,useDispatch} from 'react-redux'
-import {logout, setIsLoggedIn, setToken} from '../store/actions/userAction'
-
+import {logout, setIsLoggedIn, setToken, setUsername, setEmail} from '../store/actions/userAction'
 
 export default function NavBar() {
     // const [logIn, setLogIn] = useState(false)
@@ -28,6 +27,8 @@ export default function NavBar() {
         if(localStorage.getItem('reddit_token')){
             dispatch(setIsLoggedIn(true));
             dispatch(setToken(localStorage.getItem('reddit_token')));
+            dispatch(setUsername(localStorage.getItem('reddit_username')));
+            dispatch(setEmail(localStorage.getItem('reddit_email')));
         }
     }, [isLoggedIn])
 
