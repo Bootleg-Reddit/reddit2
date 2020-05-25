@@ -115,18 +115,18 @@ export default function Home() {
             </div>
         </div>
         <LoginForm
-                show={showLogin}
-                onHide={handleCloseLogin}
-                onShowRegister={handleShowRegister}
-                animation={true}
-            />
+        show={showLogin}
+        onHide={handleCloseLogin}
+        onShowRegister={handleShowRegister}
+        animation={true}
+        />
 
-            <RegisterForm
-            show={showRegister}
-            onHide={handleCloseRegister}
-            onShowLogin={handleShowLogin}
-            animation={true}
-            />
+        <RegisterForm
+        show={showRegister}
+        onHide={handleCloseRegister}
+        onShowLogin={handleShowLogin}
+        animation={true}
+        />
 
         </>
     )

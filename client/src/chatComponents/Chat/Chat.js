@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import queryString from 'query-string';
 import io from "socket.io-client";
+import {useSelector,useDispatch} from 'react-redux'
+import {Link, useHistory} from 'react-router-dom'
 
 import TextContainer from '../TextContainer/TextContainer';
 import Messages from '../Messages/Messages';
@@ -18,8 +20,13 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const ENDPOINT = 'http://localhost:5000/';
-
+  const isLoggedIn = useSelector((state)=> state.userReducer.isLoggedIn);
+  const history = useHistory()
   useEffect(() => {
+    if(!isLoggedIn){
+      console.log('not logged in')
+      history.push(`/`);
+    }
     const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
