@@ -80,7 +80,12 @@ class Users {
               },
               process.env.JWT_SECRET
             );
-            res.status(201).json({ token });
+            res.status(201).json(
+              { token, 
+                username: dataUser.username ,
+                email: dataUser.email
+              }
+            );
           }
         }
       })

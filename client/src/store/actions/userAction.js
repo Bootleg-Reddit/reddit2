@@ -1,7 +1,7 @@
 import swal from 'sweetalert'
 import axios from 'axios'
 
-const url = 'http://localhost:3001'
+const url = 'http://localhost:5000'
 export function login(email,password) {
     return (dispatch) => {
         axios({
@@ -14,9 +14,11 @@ export function login(email,password) {
         })
         .then(response => {
             localStorage.setItem('reddit_token', response.data.token)
+            localStorage.setItem('reddit_email', response.data.email)
+            localStorage.setItem('reddit_username', response.data.username)
             dispatch({
                 type: 'LOGIN',
-                payload: response.data.token
+                payload: response.data
             })
         })
         .catch(err=>{
@@ -29,7 +31,7 @@ export function logout() {
     localStorage.clear();
     return {
         type: 'LOGOUT',
-        payload: ""
+        payload: null
     }
 }
 
@@ -42,6 +44,20 @@ export function checkToken() {
 export const setToken = (value) => {
     return {
         type : 'SET_TOKEN',
+        payload : value
+    }
+}
+
+export const setUsername = (value) => {
+    return {
+        type : 'SET_USERNAME',
+        payload : value
+    }
+}
+
+export const setEmail = (value) => {
+    return {
+        type : 'SET_EMAIL',
         payload : value
     }
 }

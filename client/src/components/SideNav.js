@@ -3,21 +3,24 @@ import {useSelector,useDispatch} from 'react-redux'
 import { getSubreddits } from "../store/actions/subredditAction";
 import { setPost } from "../store/actions/postAction";
 
-
 import {Link, useHistory} from 'react-router-dom'
 
 export default function SideNav() {
     const home = 'http://localhost:3000/'
     const url = window.location.href;
     const path = 'http://localhost:3000/r/'
-    const current_subreddit = url.replace(path, '')
-
+    let current_subreddit = url.replace(path, '')
+    
     let temp = url.replace(path, '')
     let temp2 = temp.split('/')
     const current_subreddit2 = temp2[0]
+    if (current_subreddit.indexOf('/')){
+        current_subreddit = current_subreddit.split('/')[0]
+    }
 
     const dispatch = useDispatch();
     const subreddits = useSelector((state)=> state.subredditReducer.subreddits);
+    const username = useSelector((state)=> state.userReducer.username);
     const history = useHistory()
 
     useEffect(()=> {
@@ -31,8 +34,17 @@ export default function SideNav() {
 
     return (
         <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            {   home !== url &&
+                <>
+                <Link className="btn btn-primary" onClick={e => (!current_subreddit) ? e.preventDefault() : null} to={`/chat?name=${username}&room=${current_subreddit}`} >
+                    Go to chatroom
+                </Link> 
+                <br/>
+                </>
+            }
             <div onClick={toNewPost} className="btn btn-primary">Create Post</div>
-            <Link to='/createsubreddit' className="btn btn-secondary mt-3">Create Subreddit</Link>
+            <br/>
+            <Link to='/createsubreddit' className="btn btn-primary">Create Subreddit</Link>
             <br/>
             <p style={{textAlign:"center"}} className="mt-3">Subreddits</p>
             {   (url === home )  &&
@@ -89,8 +101,7 @@ export default function SideNav() {
                         </a>
                     }
                     </div>
-
-                    )
+                )
             })}   
             </>   
             }          
