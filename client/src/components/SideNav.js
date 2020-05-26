@@ -3,6 +3,12 @@ import {useSelector,useDispatch} from 'react-redux'
 import { getSubreddits } from "../store/actions/subredditAction";
 import { setPost } from "../store/actions/postAction";
 import {Link, useHistory} from 'react-router-dom'
+import {
+    Switch,
+    Route,
+    useRouteMatch
+} from "react-router-dom";
+
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 
@@ -66,25 +72,28 @@ export default function SideNav() {
             if(!isLoggedIn){
                 handleShowLogin()
             }
-        }
-        
+        }        
     }
 
     return (
         <>
+
         <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <div className="nav flex-column nav-pills" style={{border: "1px solid silver", padding:"7px", borderRadius: "5px"}}>
+
+            <div onClick={toNewPost} className="btn btn-primary" style={{marginBottom:'7px'}}>Create Post</div>
+            <div onClick={createSubreddit} className="btn btn-primary">Create Subreddit</div>
             {   home !== url &&
                 <>
-                <div onClick={enterChatroom} className="btn btn-primary">Enter Chatroom</div>
-                <br/>
+                <div onClick={enterChatroom} style={{marginTop:'7px'}} className="btn btn-success">Enter Chatroom</div>
                 </>
             }
-            <div onClick={toNewPost} className="btn btn-primary">Create Post</div>
+            </div>
             <br/>
-            <div onClick={createSubreddit} className="btn btn-primary">Create Subreddit</div>
 
-            <br/>
-            <h3 style={{textAlign:"center"}} className="mt-3">Subreddits</h3>
+            <div style={{border: "1px solid silver", padding: "5px", borderRadius: "5px"}}>
+            <h3 style={{textAlign:"center", color: 'grey'}} className="mt-3">Subreddits</h3>
+            <hr/>
             {   (url === home )  &&
                 <a
                 className="nav-link active"
@@ -101,7 +110,8 @@ export default function SideNav() {
                 <a
                 className="nav-link"
                 id="v-pills-home-tab" 
-                data-toggle="pill" href="/" 
+                data-toggle="pill" 
+                href="/" 
                 role="tab" 
                 aria-controls="v-pills-home" 
                 aria-selected="false"
@@ -142,7 +152,8 @@ export default function SideNav() {
                 )
             })}   
             </>   
-            }          
+            }
+            </div>         
         </div>
         <LoginForm
         show={showLogin}

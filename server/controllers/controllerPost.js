@@ -87,18 +87,13 @@ class ControllerPost {
     const downvotes = 0;
     const UserID = req.userID;
     let SubredditID = null
-    console.log('aaa')
     Subreddit.findOne({where: {name: subreddit}})
     .then((data)=> {
-      console.log('bbb')
       SubredditID = data.id;
       return Post.create({ title, content, upvotes, downvotes, UserID, SubredditID });
     })
     .then(data => {
-      console.log('hey check this')
-      console.log(data)
       return Post.findOne({ where: { id: data.id }, include: [{ model: User }]})
-      // res.status(201).json({post: data});
     })
     .then(data=>{
       res.status(201).json({post: data});

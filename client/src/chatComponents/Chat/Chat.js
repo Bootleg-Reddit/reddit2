@@ -23,11 +23,11 @@ const Chat = ({ location }) => {
   const ENDPOINT = 'http://localhost:5000/';
   const isLoggedIn = useSelector((state)=> state.userReducer.isLoggedIn);
   const username = useSelector((state)=> state.userReducer.username);
-  // setName(username);
   const history = useHistory()
 
   useEffect(() => {
-    if(isLoggedIn === false){
+
+    if(!localStorage.getItem('reddit_token')){
       console.log('not logged in')
       history.push(`/`);
     }
@@ -43,7 +43,7 @@ const Chat = ({ location }) => {
         alert(error);
       }
     });
-  }, [ENDPOINT, isLoggedIn]);
+  }, [ENDPOINT, localStorage.getItem('reddit_token')]);
   
   useEffect(() => {
     socket.on('message', message => {

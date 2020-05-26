@@ -70,7 +70,7 @@ export default function NavBar() {
                     </div>}
                     </div>
 
-                    {isLoggedIn && <div style={{ marginRight: "10px"}} className="btn btn-outline-secondary ml-2" onClick={doLogout}>
+                    {isLoggedIn && <div style={{ marginRight: "10px"}} className="btn btn-danger ml-2" onClick={doLogout}>
                         LOG OUT
                     </div>}
             </nav>
