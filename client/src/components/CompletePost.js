@@ -3,10 +3,11 @@ import {useSelector,useDispatch} from 'react-redux'
 
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
+import { vote } from "../store/actions/postAction";
 
 
 export default function Post(props) {
-    console.log(props)
+    const dispatch = useDispatch();
     const [upvote, setUpvote] = useState(0);
     const [downvote, setDownvote] = useState(0);
 
@@ -21,12 +22,15 @@ export default function Post(props) {
 
     const clickUpvote = ()=>{
         if(isLoggedIn == true){
+            console.log('tesst')
+            setDownvote(0);
             if(upvote === 1){
-                setUpvote(0);
+                // setUpvote(0);
+                // dispatch(removeVote(props.post.id))
             }else{
                 setUpvote(1);
+                dispatch(vote(props.post.id, true))
             }
-            setDownvote(0);
         }else{
             handleShowLogin();
         }
@@ -34,12 +38,14 @@ export default function Post(props) {
 
     const clickDownvote = ()=>{
         if(isLoggedIn == true){
+            setUpvote(0);
             if(downvote === 1){
-                setDownvote(0);
+                // setDownvote(0);
+                // dispatch(removeVote(props.post.id))
             }else{
                 setDownvote(1);
+                dispatch(vote(props.post.id, false)) 
             }
-            setUpvote(0);
         }else{
             handleShowLogin();
         }

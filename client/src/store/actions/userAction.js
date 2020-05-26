@@ -1,7 +1,7 @@
 import swal from 'sweetalert'
 import axios from 'axios'
 
-const url = 'http://localhost:5000'
+const url = 'https://justanotherredditclone.herokuapp.com'
 export function login(email,password) {
     return (dispatch) => {
         axios({

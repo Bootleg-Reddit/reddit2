@@ -80,6 +80,7 @@ class Users {
               },
               process.env.JWT_SECRET
             );
+            console.log('masuk')
             res.status(201).json(
               { token, 
                 username: dataUser.username ,

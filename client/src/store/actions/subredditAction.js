@@ -2,10 +2,11 @@ import swal from 'sweetalert'
 import axios from 'axios'
 import store from '../index';
 
-const url = 'http://localhost:5000'
+const url = 'https://justanotherredditclone.herokuapp.com'
 
 export function getSubreddits(){
     return (dispatch) => {
+        dispatch(setSubredditsLoading(true))
         axios({
             url: url + '/subreddit',
             method: 'get'
@@ -42,6 +43,14 @@ export function createSubreddit(data){
 
     }
 }
+
+export const setSubredditsLoading = (value) => {
+    return {
+        type : 'SET_SUBREDDITSLOADING',
+        payload : value
+    }
+}
+
 
 
 export const setSubreddits = (value) => {

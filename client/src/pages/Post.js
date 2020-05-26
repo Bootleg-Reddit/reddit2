@@ -8,7 +8,7 @@ import SideNav from '../components/SideNav'
 import {useParams} from 'react-router-dom';
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
-
+import Loading from '../components/Loading'
 
 export default function Home() {
     const { token, isLoggedIn} = useSelector(state => state.userReducer);
@@ -32,6 +32,9 @@ export default function Home() {
     const post = useSelector((state)=> state.postReducer.post);
     const comments = useSelector((state)=> state.postReducer.comments);
     const username = useSelector((state)=> state.userReducer.username);
+    const loadingPost = useSelector((state)=> state.postReducer.loadingPost);
+    const loadingComments = useSelector((state)=> state.postReducer.loadingComments);
+
     const [comment, setComment ] = useState('')
     const [newComments, setNewComments ] = useState([])
     useEffect(()=>{
@@ -74,43 +77,56 @@ export default function Home() {
             <h3 style={{textAlign:"center",color:"white"}}>{current_subreddit}</h3>
         </div>
         <div className="row m-4 mt-2">
-            <div className="col-md-9 mt-3">
-                { post &&
-                <>
-                <CompletePost post={post}/>
-                <br/>
-                <h1>Comments</h1>
-                <form>
-                    <textarea onChange={(e)=>handleInput(e.target.value)} value={comment} style={{marginBottom: "10px"}} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    <button onClick={submitComment} type="submit" className="btn btn-primary">Submit</button>
-                </form>
-                <br/>                
-                </>
-                }
-                {   newComments &&
-                    <>
-                        {newComments.map((comment, idx)=>{
-                            return (
-                                <Comment key={idx} comment={comment}/>
-                            )
-                        })}
-                    </>
-                }
 
-                {   comments &&
+
+            <div className="col-md-9 mt-3">
+                {
+                    (loadingPost || loadingComments) &&
+                    <Loading></Loading>
+                }
+                {   !(loadingPost && loadingComments) &&
                     <>
-                        {comments.map((comment, idx)=>{
-                            return (
-                                <>
-                                {   idx+1 > newComments.length &&
-                                    <Comment key={idx} comment={comment}/>
-                                }
-                                </>
-                            )
-                        })}
+                        { post &&
+                        <>
+                        <CompletePost post={post}/>
+                        <br/>
+                        <h1>Comments</h1>
+                        <form>
+                            <textarea onChange={(e)=>handleInput(e.target.value)} value={comment} style={{marginBottom: "10px"}} className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <button onClick={submitComment} type="submit" className="btn btn-primary">Submit</button>
+                        </form>
+                        <br/>                
+                        </>
+                        }
+                        {   newComments &&
+                            <>
+                                {newComments.map((comment, idx)=>{
+                                    return (
+                                        <Comment key={idx} comment={comment}/>
+                                    )
+                                })}
+                            </>
+                        }
+
+                        {   comments &&
+                            <>
+                                {comments.map((comment, idx)=>{
+                                    return (
+                                        <>
+                                        {   idx+1 > newComments.length &&
+                                            <Comment key={idx} comment={comment}/>
+                                        }
+                                        </>
+                                    )
+                                })}
+                            </>
+                        }
+
                     </>
                 }
             </div>
+
+
             <div className="col-md-3 mt-3">
                 <SideNav/>
             </div>
