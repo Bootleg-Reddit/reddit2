@@ -42,6 +42,34 @@ class ControllerPost {
       });
   }
 
+  static searchPosts(req, res, next){
+    console.log('we in')
+    let results = [];
+    const { keywords } = req.body;
+    let compare = keywords.toLowerCase();
+    Post.findAll({include: [{ model: User }, {model: Subreddit}]})
+    .then((data)=>{
+      for(let i=0; i<data.length; i++){
+        if(data[i].title.toLowerCase().includes(keywords)){
+          results.push(data[i])
+        }
+        else if(data[i].content.toLowerCase().includes(compare)){
+          results.push(data[i])
+        }
+        else if(data[i].User.username.toLowerCase().includes(compare)){
+          results.push(data[i])
+        }
+        else if(data[i].Subreddit.name.toLowerCase().includes(compare)){
+          results.push(data[i])
+        }
+      }
+      res.status(200).json({results});
+    })
+    .catch(error => {
+      next({ status: 500, msg: "Internal Server Error!" });
+    });
+  }
+
   static createPost(req, res, next) {
     const { title, content, subreddit } = req.body;
     const upvotes = 0;

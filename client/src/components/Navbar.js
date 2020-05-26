@@ -1,18 +1,17 @@
 import React,{useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
+
 import {useSelector,useDispatch} from 'react-redux'
 import {logout, setIsLoggedIn, setToken, setUsername, setEmail} from '../store/actions/userAction'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 export default function NavBar() {
-    // const [logIn, setLogIn] = useState(false)
-    // const token = useSelector((state)=>state.userReducer.token)
+    const history = useHistory()
     const dispatch = useDispatch()
     const { token, isLoggedIn} = useSelector(state => state.userReducer);
     const [showLogin, setShowLogin] = useState(false);
+    const [query, setQuery] = useState('');
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
   
@@ -33,9 +32,14 @@ export default function NavBar() {
         }
     }, [isLoggedIn])
 
+    function handleQuery(value){
+        setQuery(value)
+    }
     function search(e){
         e.preventDefault();
-        toast("Search feature comming soon");
+        if(query !== ''){
+            history.push(`/search?query=${query}`)
+        }
     }
 
     return (
@@ -50,7 +54,7 @@ export default function NavBar() {
                                 <form onSubmit={search} >
                                     <div className="input-group">
                                         <div className="input-group-prepend"><span className="input-group-text" id="basic-addon1"><i className="fas fa-search"></i></span></div>
-                                        <input className="form-control" type="search" placeholder="Find a post" aria-label="Search" style={{maxWidth:"75%"}} />
+                                        <input onChange={(e)=>handleQuery(e.target.value)} className="form-control" type="search" placeholder="Find a post" aria-label="Search" style={{maxWidth:"75%"}} />
                                     </div>
                                 </form>   
                             </li>
