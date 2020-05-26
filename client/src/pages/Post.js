@@ -31,6 +31,7 @@ export default function Home() {
     const dispatch = useDispatch();
     const post = useSelector((state)=> state.postReducer.post);
     const comments = useSelector((state)=> state.postReducer.comments);
+    const username = useSelector((state)=> state.userReducer.username);
     const [comment, setComment ] = useState('')
     const [newComments, setNewComments ] = useState([])
     useEffect(()=>{
@@ -52,7 +53,7 @@ export default function Home() {
             let newComment = {
                 content: comment,
                 User: {
-                    username: 'You'
+                    username: username
                 }
             }
             setComment('')
@@ -101,7 +102,7 @@ export default function Home() {
                         {comments.map((comment, idx)=>{
                             return (
                                 <>
-                                { comments.length - idx > newComments.length &&
+                                {   idx+1 > newComments.length &&
                                     <Comment key={idx} comment={comment}/>
                                 }
                                 </>
