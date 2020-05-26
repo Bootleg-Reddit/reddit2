@@ -1,17 +1,17 @@
 import React,{useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import logo from '../assets/logo.svg'
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
+
 import {useSelector,useDispatch} from 'react-redux'
 import {logout, setIsLoggedIn, setToken, setUsername, setEmail} from '../store/actions/userAction'
-
 export default function NavBar() {
-    // const [logIn, setLogIn] = useState(false)
-    // const token = useSelector((state)=>state.userReducer.token)
+    const history = useHistory()
     const dispatch = useDispatch()
     const { token, isLoggedIn} = useSelector(state => state.userReducer);
     const [showLogin, setShowLogin] = useState(false);
+    const [query, setQuery] = useState('');
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
   
@@ -32,6 +32,16 @@ export default function NavBar() {
         }
     }, [isLoggedIn])
 
+    function handleQuery(value){
+        setQuery(value)
+    }
+    function search(e){
+        e.preventDefault();
+        if(query !== ''){
+            history.push(`/search?query=${query}`)
+        }
+    }
+
     return (
         <>
             <nav className="navbar row navbar-light bg-light sticky-top">
@@ -41,10 +51,10 @@ export default function NavBar() {
                     <div className="col-md-6">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <form >
+                                <form onSubmit={search} >
                                     <div className="input-group">
                                         <div className="input-group-prepend"><span className="input-group-text" id="basic-addon1"><i className="fas fa-search"></i></span></div>
-                                        <input className="form-control" type="search" placeholder="Find a post" aria-label="Search" style={{maxWidth:"75%"}} />
+                                        <input onChange={(e)=>handleQuery(e.target.value)} className="form-control" type="search" placeholder="Find a post" aria-label="Search" style={{maxWidth:"75%"}} />
                                     </div>
                                 </form>   
                             </li>

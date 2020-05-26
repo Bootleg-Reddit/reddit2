@@ -31,10 +31,30 @@ export function getComments(id){
             method: 'get'
         })
         .then(response => {
-            console.log(response.data)
             dispatch({
                 type: 'SET_COMMENTS',
                 payload: response.data
+            });
+        })
+        .catch(err=>{
+            swal("Error!",'Cannot Retrieve Posts',"error")
+        })
+    }
+}
+
+export function searchPosts (query){
+    return (dispatch) => {
+        axios({
+            url: url + '/posts/search',
+            method: 'post',
+            data: {
+                keywords: query
+            }
+        })
+        .then(response => {
+            dispatch({
+                type: 'SET_POSTS',
+                payload: response.data.results
             });
         })
         .catch(err=>{

@@ -33,9 +33,6 @@ export default function SideNav() {
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
 
-
-
-
     useEffect(()=> {
         dispatch(getSubreddits());
     }, [])

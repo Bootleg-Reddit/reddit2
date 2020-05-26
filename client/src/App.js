@@ -15,6 +15,7 @@ import Post from './pages/Post'
 import NewSubreddit from './pages/NewSubreddit'
 import Subreddit from './pages/Subreddit'
 import Chat from './chatComponents/Chat/Chat'
+import Search from './pages/Search'
 function App() {
   return (
     <Provider store={store}>
@@ -35,12 +36,13 @@ function App() {
         </Route>
         <Route path="/chat/" component={Chat}>
         </Route>
-
         <Route path="/login">
           <Login />
         </Route>
         <Route path="/signup">
           <Register />
+        </Route>
+        <Route path="/search/" component={Search}>
         </Route>
         <Route path="/">
           <Home />
@@ -48,7 +50,6 @@ function App() {
       </Switch>
     </Router>
     </Provider>
-
   );
 }
 
