@@ -6,6 +6,12 @@ class ControllerPost {
     Post.findAll({include: [{ model: User }, {model: Subreddit}]})
       .then(allData => {
         console.log(allData)
+        // res.status(200).json({posts: allData});
+        return allData.sort((a,b)=>{
+          return b.score - a.score;
+        });
+      })
+      .then(allData=>{
         res.status(200).json({posts: allData});
       })
       .catch(error => {
@@ -22,6 +28,11 @@ class ControllerPost {
       }else{
         res.status(500).json({msg: 'Subreddit not found'});
       }
+    })
+    .then(data =>{
+      return data.sort((a,b)=>{
+        return b.score - a.score;
+      });
     })
     .then(data =>{
       res.status(200).json({posts: data});

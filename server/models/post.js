@@ -1,7 +1,11 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
   const { Model } = sequelize.Sequelize;
-  class Post extends Model {}
+  class Post extends Model {
+    get score() {
+      return this.upvotes - this.downvotes;
+    }
+  }
 
   Post.init(
     {

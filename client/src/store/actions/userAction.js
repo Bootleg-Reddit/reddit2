@@ -95,9 +95,12 @@ export function signUp(email,username,password) {
         })
         .then(response=>{
             localStorage.setItem('reddit_token', response.data.token)
+            localStorage.setItem('reddit_email', response.data.email)
+            localStorage.setItem('reddit_username', response.data.username)
+
             dispatch({
                 type: 'LOGIN',
-                payload: response.data.token
+                payload: response.data
             })
         })
         .catch(err=>{
