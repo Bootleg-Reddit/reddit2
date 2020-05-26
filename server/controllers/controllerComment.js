@@ -22,8 +22,15 @@ class Comments {
       include: [{ model: Post }, { model: User }]
     })
     .then((data)=> {
+      return data.sort((a,b)=>{
+        return b.id - a.id;
+      });
+      // res.status(200).json(data);
+    })
+    .then(data=>{
       res.status(200).json(data);
     })
+
     .catch((err)=> {
       res.status(500).json(err);
     })
@@ -47,6 +54,11 @@ class Comments {
           where: {PostID: req.params.id},
           include: [{ model: Post }, { model: User }]
         })
+      })
+      .then((data)=> {
+        return data.sort((a,b)=>{
+          return b.id - a.id;
+        });  
       })
       .then((data)=>{
         res.status(201).json(data);

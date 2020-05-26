@@ -7,7 +7,6 @@ import Loading from '../components/Loading'
 import Nothing from '../components/Nothing'
 
 
-
 export default function Home() {
     const dispatch = useDispatch();
 
