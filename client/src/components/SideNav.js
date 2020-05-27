@@ -14,16 +14,23 @@ import RegisterForm from './RegisterForm'
 
 export default function SideNav() {
     const home = 'http://localhost:3000/'
-    const url = window.location.href;
-    const path = 'http://localhost:3000/r/'
-    let current_subreddit = url.replace(path, '')
+    // const url = window.location.href;
+    // const path = 'http://localhost:3000/r/'
+    // let current_subreddit = url.replace(path, '')
     
-    let temp = url.replace(path, '')
-    let temp2 = temp.split('/')
-    const current_subreddit2 = temp2[0]
-    if (current_subreddit.indexOf('/')){
-        current_subreddit = current_subreddit.split('/')[0]
-    }
+    // let temp = url.replace(path, '')
+    // let temp2 = temp.split('/')
+    // const current_subreddit2 = temp2[0]
+    // if (current_subreddit.indexOf('/')){
+    //     current_subreddit = current_subreddit.split('/')[0]
+    // }
+
+    const {url} = useRouteMatch();
+    let temp2 = url.split('/')
+    console.log(temp2)
+    const current_subreddit = temp2[2]
+    const current_subreddit2 = temp2[2]
+
 
     const dispatch = useDispatch();
     const subreddits = useSelector((state)=> state.subredditReducer.subreddits);
@@ -107,7 +114,7 @@ export default function SideNav() {
             { !subredditsLoading &&
 
                 <>
-                    {   (url === home )  &&
+                    {   (url === '/' )  &&
                         <a
                         className="nav-link active"
                         id="v-pills-home-tab" 
@@ -119,7 +126,7 @@ export default function SideNav() {
                         All
                         </a>
                     }
-                    {   url !== home &&
+                    {   url !== '/' &&
                         <a
                         className="nav-link"
                         id="v-pills-home-tab" 
@@ -168,66 +175,6 @@ export default function SideNav() {
                     }
                 </>
             }
-
-            {/* {   (url === home )  &&
-                <a
-                className="nav-link active"
-                id="v-pills-home-tab" 
-                data-toggle="pill" href="/" 
-                role="tab" 
-                aria-controls="v-pills-home" 
-                aria-selected="true"
-                >
-                All
-                </a>
-            }
-            {   url !== home &&
-                <a
-                className="nav-link"
-                id="v-pills-home-tab" 
-                data-toggle="pill" 
-                href="/" 
-                role="tab" 
-                aria-controls="v-pills-home" 
-                aria-selected="false"
-                >
-                All
-                </a>
-            }
-            { subreddits &&
-            <>
-            { subreddits.map((subreddit, idx) => {
-                return (
-                    <div key={idx}>
-                    {   (current_subreddit === subreddit.name.toLowerCase() || current_subreddit2 === subreddit.name.toLowerCase()) &&
-                        <a
-                        className="nav-link active"
-                        id="v-pills-home-tab" 
-                        data-toggle="pill" href={`/r/${subreddit.name.toLowerCase()}`} 
-                        role="tab" 
-                        aria-controls="v-pills-home" 
-                        aria-selected="true"
-                        >
-                        {subreddit.name}
-                        </a>
-                    }
-                    {   (current_subreddit !== subreddit.name.toLowerCase() &&  current_subreddit2 !== subreddit.name.toLowerCase()) &&
-                        <a
-                        className="nav-link"
-                        id="v-pills-home-tab" 
-                        data-toggle="pill" href={`/r/${subreddit.name.toLowerCase()}`} 
-                        role="tab" 
-                        aria-controls="v-pills-home" 
-                        aria-selected="false"
-                        >
-                        {subreddit.name}
-                        </a>
-                    }
-                    </div>
-                )
-            })}   
-            </>   
-            } */}
             </div>         
         </div>
         <LoginForm

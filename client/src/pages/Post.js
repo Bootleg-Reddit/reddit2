@@ -1,6 +1,7 @@
 import React, {useEffect, useState } from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import { getPostById, getComments, createComment } from "../store/actions/postAction";
+import {useRouteMatch} from "react-router-dom";
 
 import Comment from '../components/Comment'
 import CompletePost from '../components/CompletePost'
@@ -9,9 +10,11 @@ import {useParams} from 'react-router-dom';
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import Loading from '../components/Loading'
+require("dotenv").config();
+
 
 export default function Home() {
-    const { token, isLoggedIn} = useSelector(state => state.userReducer);
+    const { isLoggedIn} = useSelector(state => state.userReducer);
     const [showLogin, setShowLogin] = useState(false);
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
@@ -22,12 +25,18 @@ export default function Home() {
 
     const {id} = useParams();
     console.log(id)
-    const home = 'http://localhost:3000/'
-    const url = window.location.href;
-    const path = 'http://localhost:3000/r/'
-    let temp = url.replace(path, '')
-    let temp2 = temp.split('/')
-    const current_subreddit = temp2[0]
+    // const home = process.env.URL
+
+    const {url} = useRouteMatch();
+    console.log('url:' + url)
+    // url = window.location.href;
+    // const path = 'http://localhost:3000/r/'
+    // const path = process.env.SUBURL
+
+    // let temp = url.replace(path, '')
+    let temp2 = url.split('/')
+    console.log(temp2)
+    const current_subreddit = temp2[2]
     const dispatch = useDispatch();
     const post = useSelector((state)=> state.postReducer.post);
     const comments = useSelector((state)=> state.postReducer.comments);
@@ -84,7 +93,7 @@ export default function Home() {
                     (loadingPost || loadingComments) &&
                     <Loading></Loading>
                 }
-                {   !(loadingPost && loadingComments) &&
+                {   !(loadingPost || loadingComments) &&
                     <>
                         { post &&
                         <>

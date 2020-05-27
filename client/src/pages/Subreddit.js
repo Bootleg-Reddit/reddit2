@@ -5,15 +5,21 @@ import { useSelector, useDispatch} from "react-redux";
 import { getAllPostsBySubreddit } from "../store/actions/postAction";
 import Loading from '../components/Loading'
 import Nothing from '../components/Nothing'
+import {useRouteMatch} from "react-router-dom";
 
 
 export default function Home() {
     const dispatch = useDispatch();
 
-    const home = 'http://localhost:3000/'
-    const url2 = window.location.href;
-    const subpath = 'http://localhost:3000/r/'
-    let current_subreddit = url2.replace(subpath, '')
+    // const home = 'http://localhost:3000/'
+    // const url2 = window.location.href;
+    // const subpath = 'http://localhost:3000/r/'
+    // let current_subreddit = url2.replace(subpath, '')
+    const {url} = useRouteMatch();
+    let temp2 = url.split('/')
+    console.log(temp2)
+    const current_subreddit = temp2[2]
+
     let posts = useSelector((state)=> state.postReducer.posts);
     let loadingPosts = useSelector((state)=> state.postReducer.loadingPosts);
     useEffect(()=>{
