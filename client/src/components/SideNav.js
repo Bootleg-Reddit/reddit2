@@ -91,7 +91,7 @@ export default function SideNav() {
 
             <div onClick={toNewPost} className="btn btn-primary" style={{marginBottom:'7px'}}>Create Post</div>
             <div onClick={createSubreddit} className="btn btn-primary">Create Subreddit</div>
-            {   home !== url &&
+            {   url !== '/' &&
                 <>
                 <div onClick={enterChatroom} style={{marginTop:'7px'}} className="btn btn-success">Enter Chatroom</div>
                 </>
