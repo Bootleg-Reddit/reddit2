@@ -4,7 +4,6 @@ import io from "socket.io-client";
 import {useSelector,useDispatch} from 'react-redux'
 import {Link, useHistory} from 'react-router-dom'
 
-import TextContainer from '../TextContainer/TextContainer';
 import Messages from '../Messages/Messages';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
@@ -20,7 +19,7 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const ENDPOINT = 'http://localhost:5000/';
+  const ENDPOINT = 'https://justanotherredditclone.herokuapp.com/';
   const isLoggedIn = useSelector((state)=> state.userReducer.isLoggedIn);
   const username = useSelector((state)=> state.userReducer.username);
   const history = useHistory()

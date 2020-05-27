@@ -3,7 +3,7 @@ import {useSelector,useDispatch} from 'react-redux'
 
 import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
-import { vote, removeVote } from "../store/actions/postAction";
+import { vote } from "../store/actions/postAction";
 
 
 export default function Post(props) {

@@ -2,7 +2,7 @@ import swal from 'sweetalert'
 import axios from 'axios'
 import store from '../index';
 
-const url = 'http://localhost:5000'
+const url = 'https://justanotherredditclone.herokuapp.com'
 
 export function getAllPosts(){
     return (dispatch) => {
@@ -26,6 +26,7 @@ export function getAllPosts(){
 
 export function getComments(id){
     return (dispatch) => {
+        dispatch(setLoadingComments(true))
         axios({
             url: url + '/comments/' + id,
             method: 'get'
@@ -44,6 +45,7 @@ export function getComments(id){
 
 export function searchPosts (query){
     return (dispatch) => {
+        dispatch(setLoadingPosts(true))
         axios({
             url: url + '/posts/search',
             method: 'post',
@@ -225,6 +227,21 @@ export const setLoadingPosts = (value) => {
         payload : value
     }
 }
+export const setLoadingPost = (value) => {
+    return {
+        type : 'SET_LOADINGPOST',
+        payload : value
+    }
+}
+
+export const setLoadingComments = (value) => {
+    return {
+        type : 'SET_LOADINGCOMMENTS',
+        payload : value
+    }
+}
+
+
 
 
 
